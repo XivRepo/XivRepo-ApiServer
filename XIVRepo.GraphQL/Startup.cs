@@ -61,9 +61,9 @@ namespace XIVRepo.GraphQL
         private void SetupGraphQLServices(IServiceCollection services)
         {
             services.AddGraphQLServer()
+                .AddAuthorization()
                 .AddQueryType(d => d.Name("Query"))
-                .AddType<AccountService.Queries>()
-                .AddAuthorization();
+                .AddType<AccountService.Queries>();
         }
         
         private void SetupDatabaseServices(IServiceCollection services)

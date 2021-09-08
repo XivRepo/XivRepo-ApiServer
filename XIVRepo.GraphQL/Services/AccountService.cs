@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using HotChocolate;
+using HotChocolate.AspNetCore.Authorization;
 using HotChocolate.Data;
 using HotChocolate.Types;
-using Microsoft.AspNetCore.Authorization;
 using XIVRepo.Core.Models.Accounts;
 using XIVRepo.EntityFramework;
 
