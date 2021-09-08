@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\XIVRepo.Core\XIVRepo.Core.csproj" />
+      <ProjectReference Include="..\XIVRepo.EntityFramework\XIVRepo.EntityFramework.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove=".dockerignore" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.env">
+        <Link>.env</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+</Project>
