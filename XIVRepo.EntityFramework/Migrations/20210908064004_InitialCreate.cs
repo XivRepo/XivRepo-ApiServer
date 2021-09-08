@@ -11,6 +11,20 @@ namespace XIVRepo.EntityFramework.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    RoleId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Title = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.RoleId);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "UserAccounts",
                 columns: table => new
                 {
@@ -27,34 +41,41 @@ namespace XIVRepo.EntityFramework.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Roles",
+                name: "AccountRole",
                 columns: table => new
                 {
-                    RoleId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Title = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    AccountId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                    AccountsWithRoleAccountId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    RolesRoleId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.RoleId);
+                    table.PrimaryKey("PK_AccountRole", x => new { x.AccountsWithRoleAccountId, x.RolesRoleId });
                     table.ForeignKey(
-                        name: "FK_Roles_UserAccounts_AccountId",
-                        column: x => x.AccountId,
+                        name: "FK_AccountRole_Roles_RolesRoleId",
+                        column: x => x.RolesRoleId,
+                        principalTable: "Roles",
+                        principalColumn: "RoleId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AccountRole_UserAccounts_AccountsWithRoleAccountId",
+                        column: x => x.AccountsWithRoleAccountId,
                         principalTable: "UserAccounts",
                         principalColumn: "AccountId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Roles_AccountId",
-                table: "Roles",
-                column: "AccountId");
+                name: "IX_AccountRole_RolesRoleId",
+                table: "AccountRole",
+                column: "RolesRoleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AccountRole");
+
             migrationBuilder.DropTable(
                 name: "Roles");
 

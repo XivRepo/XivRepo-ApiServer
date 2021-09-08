@@ -13,7 +13,6 @@ namespace XIVRepo.GraphQL.Services
         [ExtendObjectType(Name = "Query")]
         public class Queries
         {
-            [Authorize]
             [UseDbContext(typeof(XivRepoDbContext))]
             public IQueryable<Account> GetAccounts([ScopedService] XivRepoDbContext context) => context.UserAccounts;
         }

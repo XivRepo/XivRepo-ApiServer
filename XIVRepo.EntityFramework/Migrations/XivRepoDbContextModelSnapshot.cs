@@ -17,6 +17,21 @@ namespace XIVRepo.EntityFramework.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.9");
 
+            modelBuilder.Entity("AccountRole", b =>
+                {
+                    b.Property<Guid>("AccountsWithRoleAccountId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("RolesRoleId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("AccountsWithRoleAccountId", "RolesRoleId");
+
+                    b.HasIndex("RolesRoleId");
+
+                    b.ToTable("AccountRole");
+                });
+
             modelBuilder.Entity("XIVRepo.Core.Models.Accounts.Account", b =>
                 {
                     b.Property<Guid>("AccountId")
@@ -42,30 +57,28 @@ namespace XIVRepo.EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("AccountId")
-                        .HasColumnType("char(36)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("RoleId");
 
-                    b.HasIndex("AccountId");
-
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("XIVRepo.Core.Models.Accounts.Role", b =>
+            modelBuilder.Entity("AccountRole", b =>
                 {
                     b.HasOne("XIVRepo.Core.Models.Accounts.Account", null)
-                        .WithMany("Roles")
-                        .HasForeignKey("AccountId");
-                });
+                        .WithMany()
+                        .HasForeignKey("AccountsWithRoleAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("XIVRepo.Core.Models.Accounts.Account", b =>
-                {
-                    b.Navigation("Roles");
+                    b.HasOne("XIVRepo.Core.Models.Accounts.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RolesRoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

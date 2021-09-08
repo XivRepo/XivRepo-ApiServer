@@ -22,4 +22,11 @@
       <ProjectReference Include="..\XIVRepo.Core\XIVRepo.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="..\.env">
+        <Link>.env</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

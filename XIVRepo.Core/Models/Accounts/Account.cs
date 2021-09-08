@@ -10,6 +10,6 @@ namespace XIVRepo.Core.Models.Accounts
         public Guid AccountId { get; set; }
         public string DiscordId { get; set; }
         public string DisplayName { get; set; }
-        public List<Role>? Roles { get; set; }
+        public ICollection<Role>? Roles { get; set; }
     }
 }

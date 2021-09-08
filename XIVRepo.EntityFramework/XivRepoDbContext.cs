@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using XIVRepo.Core.Helpers;
 using XIVRepo.Core.Models.Accounts;
 
 namespace XIVRepo.EntityFramework
@@ -9,5 +10,10 @@ namespace XIVRepo.EntityFramework
         public DbSet<Role> Roles { get; set; }
         
         public XivRepoDbContext(DbContextOptions<XivRepoDbContext> options) : base(options) { }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

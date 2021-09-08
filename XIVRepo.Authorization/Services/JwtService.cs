@@ -30,6 +30,8 @@ namespace XIVRepo.Authorization.Services
 
             identity.AddClaim(new Claim(ClaimTypes.Name, account.DisplayName));
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, account.AccountId.ToString()));
+            identity.AddClaim(new Claim(ClaimTypes.Role, "User"));
+            identity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
             
             foreach (var role in await _accountsRepository.GetAllRoles())
             {
