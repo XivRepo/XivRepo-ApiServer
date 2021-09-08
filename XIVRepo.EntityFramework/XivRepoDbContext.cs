@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using XIVRepo.Core.Helpers;
 using XIVRepo.Core.Models.Accounts;
 
 namespace XIVRepo.EntityFramework

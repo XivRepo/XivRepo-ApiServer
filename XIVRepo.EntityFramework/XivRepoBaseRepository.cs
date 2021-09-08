@@ -2,11 +2,11 @@
 {
     public class XivRepoBaseRepository
     {
-        internal readonly XivRepoDbContext _context;
+        protected readonly XivRepoDbContext Context;
 
         public XivRepoBaseRepository(XivRepoDbContext dbContext)
         {
-            _context = dbContext;
+            Context = dbContext;
         }
     }
 }

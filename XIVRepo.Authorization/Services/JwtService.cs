@@ -4,9 +4,9 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
+using XIVRepo.Authorization.Repositories;
 using XIVRepo.Core.Helpers;
 using XIVRepo.Core.Models.Accounts;
-using XIVRepo.EntityFramework.Repositories;
 
 namespace XIVRepo.Authorization.Services
 {

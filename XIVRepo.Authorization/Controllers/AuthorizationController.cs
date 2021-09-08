@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using XIVRepo.Authorization.Models;
+using XIVRepo.Authorization.Repositories;
 using XIVRepo.Authorization.Services;
 using XIVRepo.Core.Models.Accounts;
-using XIVRepo.EntityFramework.Repositories;
 
 namespace XIVRepo.Authorization.Controllers
 {

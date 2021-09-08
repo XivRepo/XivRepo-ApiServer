@@ -5,10 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using XIVRepo.Core;
+using XIVRepo.Authorization.Repositories;
 using XIVRepo.Core.Helpers;
 using XIVRepo.EntityFramework;
-using XIVRepo.EntityFramework.Repositories;
 
 namespace XIVRepo.Authorization
 {
