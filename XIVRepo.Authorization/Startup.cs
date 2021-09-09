@@ -31,7 +31,6 @@ namespace XIVRepo.Authorization
                 var dbConnectionString = $"Server=localhost;Port=3306;Database={EnvironmentVariables.DatabaseName()};Uid={EnvironmentVariables.DatabaseUserId()};Pwd={EnvironmentVariables.DatabasePassword()};";
                 builder
                     .UseMySql(dbConnectionString, ServerVersion.AutoDetect(dbConnectionString))
-                    .UseLazyLoadingProxies()
                     .EnableDetailedErrors();
             });
             services.AddScoped<AccountsRepository>();
