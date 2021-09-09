@@ -12,7 +12,6 @@ namespace XIVRepo.Core.Models.Mods
     public class Mod
     {
         // Basic Info
-        [Key]
         public Guid Id { get; set; }
         public string Slug { get; set; }
         public Account Author { get; set; }
@@ -31,9 +30,7 @@ namespace XIVRepo.Core.Models.Mods
         
         // Statistics
         public int TotalDownloads => Versions.Select(v => v.TotalDownloads).Sum();
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime PublishedTime { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime PublishedTime { get; } = DateTime.Now;
         public DateTime LastUpdated { get; set; }
         
         // Additional Info

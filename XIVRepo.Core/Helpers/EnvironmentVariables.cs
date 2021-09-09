@@ -15,6 +15,8 @@ namespace XIVRepo.Core.Helpers
         public static string? JwtIssuer() => Environment.GetEnvironmentVariable("JWT_ISSUER");
         
         public static string JwtKey() => Environment.GetEnvironmentVariable("JWT_KEY") ?? "";
+
+        public static bool InDevMode() => Environment.GetEnvironmentVariable("ENVIRONMENT") == "DEV";
         
         public static int RetryCount() =>
             int.TryParse(Environment.GetEnvironmentVariable("RETRY_COUNT"), out var retryCount) ? retryCount : 0;

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using XIVRepo.EntityFramework;
 
 namespace XIVRepo.EntityFramework.Migrations
 {
     [DbContext(typeof(XivRepoDbContext))]
-    partial class XivRepoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210909013400_AddedTriggers")]
+    partial class AddedTriggers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

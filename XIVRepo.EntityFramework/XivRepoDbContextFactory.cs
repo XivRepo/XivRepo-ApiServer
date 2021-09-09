@@ -1,8 +1,7 @@
-﻿using System.IO;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
 using XIVRepo.Core.Helpers;
+using XIVRepo.EntityFramework.Triggers;
 
 namespace XIVRepo.EntityFramework
 {
@@ -15,11 +14,26 @@ namespace XIVRepo.EntityFramework
             
             var dbConnectionString =
                 $"Server=localhost;Port=3306;Database={EnvironmentVariables.DatabaseName()};Uid={EnvironmentVariables.DatabaseUserId()};Pwd={EnvironmentVariables.DatabasePassword()};";
-            var builder = new DbContextOptionsBuilder<XivRepoDbContext>()
-                .UseMySql(dbConnectionString, ServerVersion.AutoDetect(dbConnectionString))
-                .EnableDetailedErrors();
-            
+            var builder = new DbContextOptionsBuilder<XivRepoDbContext>();
+            ConfigureContextOptionsBuilder(builder);
             return new XivRepoDbContext(builder.Options);
+        }
+
+        public static void ConfigureContextOptionsBuilder(DbContextOptionsBuilder builder)
+        {
+            var dbConnectionString =
+                $"Server=localhost;Port=3306;Database={EnvironmentVariables.DatabaseName()};Uid={EnvironmentVariables.DatabaseUserId()};Pwd={EnvironmentVariables.DatabasePassword()};";
+            builder
+                .UseMySql(dbConnectionString, ServerVersion.AutoDetect(dbConnectionString))
+                .UseTriggers(optionsBuilder =>
+                {
+                    optionsBuilder.AddTrigger<ModVersionTrigger>();
+                });
+            
+            if (EnvironmentVariables.InDevMode())
+            {
+                builder.EnableDetailedErrors();
+            }
         }
     }
 }

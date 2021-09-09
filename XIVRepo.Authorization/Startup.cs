@@ -28,10 +28,7 @@ namespace XIVRepo.Authorization
             
             services.AddDbContext<XivRepoDbContext>(builder =>
             {
-                var dbConnectionString = $"Server=localhost;Port=3306;Database={EnvironmentVariables.DatabaseName()};Uid={EnvironmentVariables.DatabaseUserId()};Pwd={EnvironmentVariables.DatabasePassword()};";
-                builder
-                    .UseMySql(dbConnectionString, ServerVersion.AutoDetect(dbConnectionString))
-                    .EnableDetailedErrors();
+                XivRepoDbContextFactory.ConfigureContextOptionsBuilder(builder);
             });
             services.AddScoped<AccountsRepository>();
             

@@ -70,10 +70,7 @@ namespace XIVRepo.GraphQL
         {
             services.AddPooledDbContextFactory<XivRepoDbContext>(builder =>
             {
-                var dbConnectionString = $"Server=localhost;Port=3306;Database={EnvironmentVariables.DatabaseName()};Uid={EnvironmentVariables.DatabaseUserId()};Pwd={EnvironmentVariables.DatabasePassword()};";
-                builder
-                    .UseMySql(dbConnectionString, ServerVersion.AutoDetect(dbConnectionString))
-                    .EnableDetailedErrors();
+                XivRepoDbContextFactory.ConfigureContextOptionsBuilder(builder);
             });
         }
         

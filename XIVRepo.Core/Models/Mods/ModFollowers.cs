@@ -8,7 +8,6 @@ namespace XIVRepo.Core.Models.Mods
     {
         public Guid ModId { get; set; }
         public Guid FollowerId { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime TimeFollowed { get; set; }
+        public DateTime TimeFollowed { get; } = DateTime.Now;
     }
 }

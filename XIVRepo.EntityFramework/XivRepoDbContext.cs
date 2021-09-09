@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using HotChocolate.Types;
 using Microsoft.EntityFrameworkCore;
 using XIVRepo.Core.Models.Accounts;
@@ -28,10 +29,18 @@ namespace XIVRepo.EntityFramework
             modelBuilder.Entity<Mod>()
                 .HasIndex(m => m.Slug)
                 .IsUnique();
+            modelBuilder.Entity<Mod>()
+                .Property(m => m.PublishedTime)
+                .HasDefaultValueSql("getdate()");
+            modelBuilder.Entity<Mod>()
+                .Property(m => m.LastUpdated)
+                .ValueGeneratedOnUpdate();
             modelBuilder.Entity<ModFollowers>()
                 .HasKey(i => new { i.FollowerId, i.ModId });
+            modelBuilder.Entity<Tag>()
+                .HasKey(t => t.TagId);
             #endregion
-            
+
             #region  Join Tables
             // User Accounts and Role
             modelBuilder.Entity<Account>()
@@ -78,9 +87,10 @@ namespace XIVRepo.EntityFramework
                         .WithMany()
                         .HasForeignKey("ModId"));
             
+            // Mod Dependencies 
             modelBuilder.Entity<Mod>()
-                .HasMany(p => p.ModDependencies)
-                .WithMany(p => p.ModsRequiredFor)
+                .HasMany(m => m.ModDependencies)
+                .WithMany(m => m.ModsRequiredFor)
                 .UsingEntity<Dictionary<string, object>>(
                     "ModDependencies",
                     e => e

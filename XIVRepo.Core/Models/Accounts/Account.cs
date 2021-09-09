@@ -6,7 +6,6 @@ namespace XIVRepo.Core.Models.Accounts
 {
     public class Account
     {
-        [Key]
         public Guid Id { get; set; }
         public string DiscordId { get; set; }
         public string DisplayName { get; set; }
