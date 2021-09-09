@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using XIVRepo.Core.Helpers;
+﻿using System.Collections.Generic;
+using HotChocolate.Types;
+using Microsoft.EntityFrameworkCore;
 using XIVRepo.Core.Models.Accounts;
+using XIVRepo.Core.Models.Files;
+using XIVRepo.Core.Models.Mods;
 
 namespace XIVRepo.EntityFramework
 {
@@ -8,12 +11,87 @@ namespace XIVRepo.EntityFramework
     {
         public DbSet<Account> UserAccounts { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Mod> Mods { get; set; }
+        public DbSet<FileUpload> Files { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<Version> ModVersions { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<PreviewImage> ModPreviewImages { get; set; }
         
         public XivRepoDbContext(DbContextOptions<XivRepoDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            #region Indexes and Keys
+            modelBuilder.Entity<Mod>()
+                .HasIndex(m => m.Slug)
+                .IsUnique();
+            modelBuilder.Entity<ModFollowers>()
+                .HasKey(i => new { i.FollowerId, i.ModId });
+            #endregion
+            
+            #region  Join Tables
+            // User Accounts and Role
+            modelBuilder.Entity<Account>()
+                .HasMany(p => p.Roles)
+                .WithMany(p => p.AccountsWithRole)
+                .UsingEntity<Dictionary<string, object>>(
+                    "UserAccountRoles",
+                    e => e
+                        .HasOne<Role>()
+                        .WithMany()
+                        .HasForeignKey("RoleId"),
+                    e => e
+                        .HasOne<Account>()
+                        .WithMany()
+                        .HasForeignKey("AccountId"));
+            
+            // Mod Categories
+            modelBuilder.Entity<Mod>()
+                .HasMany(p => p.Categories)
+                .WithMany(p => p.ModsInCategory)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ModsInCategories",
+                    e => e
+                        .HasOne<Category>()
+                        .WithMany()
+                        .HasForeignKey("CategoryId"),
+                    e => e
+                        .HasOne<Mod>()
+                        .WithMany()
+                        .HasForeignKey("ModId"));
+            
+            // Mod Tags
+            modelBuilder.Entity<Mod>()
+                .HasMany(p => p.UserTags)
+                .WithMany(p => p.ModsWithTag)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ModsWithTags",
+                    e => e
+                        .HasOne<Tag>()
+                        .WithMany()
+                        .HasForeignKey("TagId"),
+                    e => e
+                        .HasOne<Mod>()
+                        .WithMany()
+                        .HasForeignKey("ModId"));
+            
+            modelBuilder.Entity<Mod>()
+                .HasMany(p => p.ModDependencies)
+                .WithMany(p => p.ModsRequiredFor)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ModDependencies",
+                    e => e
+                        .HasOne<Mod>()
+                        .WithMany()
+                        .HasForeignKey("ModDependencyId"),
+                    e => e
+                        .HasOne<Mod>()
+                        .WithMany()
+                        .HasForeignKey("BaseModId"));
+            #endregion
         }
     }
 }

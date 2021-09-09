@@ -2,35 +2,22 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using XIVRepo.EntityFramework;
 
 namespace XIVRepo.EntityFramework.Migrations
 {
     [DbContext(typeof(XivRepoDbContext))]
-    partial class XivRepoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210909000108_RemovedCountFields")]
+    partial class RemovedCountFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.9");
-
-            modelBuilder.Entity("ModDependencies", b =>
-                {
-                    b.Property<Guid>("BaseModId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("ModDependencyId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("BaseModId", "ModDependencyId");
-
-                    b.HasIndex("ModDependencyId");
-
-                    b.ToTable("ModDependencies");
-                });
 
             modelBuilder.Entity("ModsInCategories", b =>
                 {
@@ -307,21 +294,6 @@ namespace XIVRepo.EntityFramework.Migrations
                     b.HasIndex("VersionFileId");
 
                     b.ToTable("ModVersions");
-                });
-
-            modelBuilder.Entity("ModDependencies", b =>
-                {
-                    b.HasOne("XIVRepo.Core.Models.Mods.Mod", null)
-                        .WithMany()
-                        .HasForeignKey("BaseModId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("XIVRepo.Core.Models.Mods.Mod", null)
-                        .WithMany()
-                        .HasForeignKey("ModDependencyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ModsInCategories", b =>
