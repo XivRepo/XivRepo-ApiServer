@@ -40,7 +40,7 @@ namespace XIVRepo.Authorization.Controllers
             {
                 await _accountsRepository.AddAccount(new Account
                 {
-                    AccountId = Guid.Parse("8b3cc4c0-46d5-47df-8bc3-2d7672a2dd70"),
+                    Id = Guid.Parse("8b3cc4c0-46d5-47df-8bc3-2d7672a2dd70"),
                     DiscordId = "142645013300510720",
                     DisplayName = "Example User",
                     Roles = null

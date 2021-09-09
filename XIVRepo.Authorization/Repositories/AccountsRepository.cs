@@ -24,7 +24,7 @@ namespace XIVRepo.Authorization.Repositories
         public async Task<Account> GetDefaultAccount()
         {
             return await Context.UserAccounts
-                .Where(a => a.AccountId == Guid.Parse("8b3cc4c0-46d5-47df-8bc3-2d7672a2dd70"))
+                .Where(a => a.Id == Guid.Parse("8b3cc4c0-46d5-47df-8bc3-2d7672a2dd70"))
                 .FirstOrDefaultAsync();
         }
 

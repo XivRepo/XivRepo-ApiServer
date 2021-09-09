@@ -29,7 +29,7 @@ namespace XIVRepo.Authorization.Services
             ClaimsIdentity identity = new ClaimsIdentity();
 
             identity.AddClaim(new Claim(ClaimTypes.Name, account.DisplayName));
-            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, account.AccountId.ToString()));
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, account.Id.ToString()));
             identity.AddClaim(new Claim(ClaimTypes.Role, "User"));
             identity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
             
